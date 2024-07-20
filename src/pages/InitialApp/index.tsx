@@ -1,5 +1,3 @@
-import Logo from "@/assets/svg/initialAnimated.svg";
-import InitialGif from "@/assets/innovation.gif";
 
 export function InitialApp () {
   return (

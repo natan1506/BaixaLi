@@ -11,8 +11,9 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "system-tray", "shell-open"] }
+tauri = { version = "1", features = [ "fs-all", "shell-open", "http-all", "system-tray"] }
 serde = { version = "1", features = ["derive"] }
+dotenv = "0.15.0"
 serde_json = "1"
 
 [features]
