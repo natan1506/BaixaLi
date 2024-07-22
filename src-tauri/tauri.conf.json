@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "BaixaLi",
-    "version": "0.0.0"
+    "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
@@ -17,7 +17,9 @@
         "open": true
       },
       "http": {
-        "all": true
+        "all": true,
+        "scope": ["https://api.mangadex.org/*"],
+        "request": true 
       },
       "fs": {
        "all": true,

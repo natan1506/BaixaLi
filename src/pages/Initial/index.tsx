@@ -3,13 +3,14 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { searchManga } from "@/api/axios";
+import { searchManga } from "@/api/Http";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function Initial () {
   const nav = useNavigate()
   const [dataManga, setDataManga] = useState<any>([]);
+  const [messageError, setMessageError] = useState<any>("");
   // const [dataHq, setDataHq] = useState([]);
   const [noResults, setNoResults] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
@@ -17,8 +18,8 @@ export function Initial () {
   const handleSearchMangas = async () => {
     const consult = await searchManga(name)
     // const constultHq = await searchHq(name)
-    if(consult) {
-      setDataManga(consult);
+    if(consult.data) {
+      setDataManga(consult.data);
     }
 
     // console.log(constultHq)
@@ -26,8 +27,11 @@ export function Initial () {
     // if(consult && consult.length === 0 &&  constultHq.length === 0) {
     //   setNoResults(true)
     // }
-    if(consult && consult.length === 0) {
+    if(consult.data && consult.data.length === 0) {
       setNoResults(true)
+    }
+    if(consult.error) {
+      setMessageError(JSON.stringify(consult.message, null, 2))
     }
   }
 
@@ -132,6 +136,7 @@ export function Initial () {
           {noResults && (
             <p>No results</p>
           )}
+          <span>{messageError}</span>
         </div>
       </div>
     </div>

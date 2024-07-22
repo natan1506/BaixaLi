@@ -1,28 +1,39 @@
 import axios from 'axios'
 import jsPDF from 'jspdf';
+import { getClient, ResponseType } from '@tauri-apps/api/http';
+
 import { writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
 const apiUrl = process.env.VITE_API_BASE_URL;
 
 
 export async function searchManga(title:string, _lang?:string) {
   try {
-    const url = `https://api.mangadex.org/manga?title=${title}`;
+    const client = await getClient();
 
-    const response = await axios.get(url, {
-      headers: {
+    const url = `https://api.mangadex.org/manga?title=${title}`;
+    const response = await client.get<any>(url, {
+      timeout: 30,
+      // the expected response type
+      headers:{
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'Accept': 'application/json',
+        'User-Agent': 'BaixaLi/1.0' 
       },
+      responseType: ResponseType.JSON
     });
+
+    // const response = await axios.get(url, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json',
+    //   },
+    // });
 
 
     // const response = await axios.get(`${apiUrl}/search`, {
     //   params: { q: title }
     // });
-    console.log(response)
-
-    const mangaData = response.data.data;
-
+    const mangaData:any[] = response?.data?.data;
     const mangaWithCovers = await getCovers(mangaData)
 
     return {data: mangaWithCovers ? mangaWithCovers : []};
@@ -35,11 +46,17 @@ export async function fetchChapters(mangaId:string) {
   try {
 
     const url = `https://api.mangadex.org/manga/${mangaId}/feed`;
-    const response = await axios.get(url, {
-      headers: {
+    const client = await getClient();
+
+    const response = await client.get<any>(url, {
+      timeout: 30,
+      // the expected response type
+      headers:{
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'Accept': 'application/json',
+        'User-Agent': 'BaixaLi/1.0'
       },
+      responseType: ResponseType.JSON
     });
 
     const chaptersData = response.data.data;
@@ -65,12 +82,20 @@ export async function fetchChapters(mangaId:string) {
 
 export async function downloadChapter(chapterId:string) {
   try {
-    const response = await axios.get(`https://api.mangadex.org/at-home/server/${chapterId}`, {
-      headers: {
+    const client = await getClient();
+
+    const url = `https://api.mangadex.org/at-home/server/${chapterId}`;
+    const response = await client.get<any>(url, {
+      timeout: 30,
+      // the expected response type
+      headers:{
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'Accept': 'application/json',
+        'User-Agent': 'BaixaLi/1.0' // Substitua 'MyAppName/1.0' pelo nome e versão do seu app
       },
+      responseType: ResponseType.JSON
     });
+
     const { baseUrl } = response.data;
     const chapterHash = response.data.chapter.hash;
     const pageArray = response.data.chapter.data;
@@ -121,11 +146,18 @@ export async function downloadChapter(chapterId:string) {
 
 export async function getChapter(chapterId:string) {
   try {
-    const response = await axios.get(`https://api.mangadex.org/at-home/server/${chapterId}`, {
-      headers: {
+    const client = await getClient();
+
+    const url = `https://api.mangadex.org/at-home/server/${chapterId}`;
+    const response = await client.get<any>(url, {
+      timeout: 30,
+      // the expected response type
+      headers:{
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'Accept': 'application/json',
+        'User-Agent': 'BaixaLi/1.0' // Substitua 'MyAppName/1.0' pelo nome e versão do seu app
       },
+      responseType: ResponseType.JSON
     });
     const { baseUrl } = response.data;
     const chapterHash = response.data.chapter.hash;
@@ -148,11 +180,17 @@ export async function getChapter(chapterId:string) {
 async function getCovers(mangaData:any[]) {
   const mangaWithCovers = await Promise.all(
     mangaData.map(async (manga) => {
-      const coverResponse = await axios.get(`https://api.mangadex.org/cover/${manga.relationships.find((rel: any) => rel.type === 'cover_art').id}`, {
-        headers: {
+      const client = await getClient();
+
+      const coverResponse = await client.get<any>(`https://api.mangadex.org/cover/${manga.relationships.find((rel: any) => rel.type === 'cover_art').id}`, {
+        timeout: 30,
+        // the expected response type
+        headers:{
           'Content-Type': 'application/json',
-          Accept: 'application/json',
+          'Accept': 'application/json',
+          'User-Agent': 'BaixaLi/1.0' // Substitua 'MyAppName/1.0' pelo nome e versão do seu app
         },
+        responseType: ResponseType.JSON
       });
       const cover = coverResponse.data.data.attributes.fileName
       return {

@@ -1,4 +1,4 @@
-import { fetchChapters } from "@/api/axios"
+import { fetchChapters } from "@/api/Http"
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"

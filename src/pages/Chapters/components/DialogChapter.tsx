@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useEffect, useState } from "react"
-import { downloadChapter, getChapter } from "@/api/axios"
+import { downloadChapter, getChapter } from "@/api/Http"
 
 interface DialogProps {
   openState: boolean
