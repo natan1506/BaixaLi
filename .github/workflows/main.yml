@@ -41,10 +41,9 @@ jobs:
           cache: 'pnpm' # Set this to npm, yarn or pnpm.
 
       - name: install pnpm
-        run: |
-          npm install -g pnpm
-          echo "::add-path::$(npm bin -g)"
-          pnpm --version
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
