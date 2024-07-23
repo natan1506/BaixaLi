@@ -1,7 +1,9 @@
 {
   "build": {
     "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "distDir": "../dist",
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev"
   },
   "package": {
     "productName": "BaixaLi",
