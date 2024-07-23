@@ -40,7 +40,6 @@ jobs:
           node-version: lts/*
           cache: 'npm' # Set this to npm, yarn or pnpm.
 
-    
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -53,8 +52,10 @@ jobs:
           workspaces: './src-tauri -> target'
 
       - name: install frontend dependencies
-        # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
-        run: npm install # change this to npm or npm depending on which one you use.
+        run: npm install
+
+      - name: build frontend
+        run: npm run build # This will build your frontend assets and place them in the dist directory.
 
       - uses: tauri-apps/tauri-action@v0
         env:
