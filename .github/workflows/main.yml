@@ -67,3 +67,9 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: tauri-build-${{ matrix.platform }}
+          path: ./src-tauri/target/release/bundle/
