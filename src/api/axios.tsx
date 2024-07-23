@@ -41,7 +41,6 @@ export async function fetchChapters(mangaId:string) {
         Accept: 'application/json',
       },
     });
-
     const chaptersData = response.data.data;
 
     const sortedChapters = chaptersData.sort((a:any, b:any) => {
