@@ -6,16 +6,20 @@ import { Label } from "@/components/ui/label";
 import { searchManga } from "@/api/Http";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Loader2Icon } from "lucide-react";
+import { Loading } from "@/components/Loading";
 
 export function Initial () {
   const nav = useNavigate()
   const [dataManga, setDataManga] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false)
   const [messageError, setMessageError] = useState<any>("");
   // const [dataHq, setDataHq] = useState([]);
   const [noResults, setNoResults] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   // const [typeView, setTypeView] = useState<"paged" | "list">("paged");
   const handleSearchMangas = async () => {
+    setLoading(true)
     const consult = await searchManga(name)
     // const constultHq = await searchHq(name)
     if(consult.data) {
@@ -33,6 +37,7 @@ export function Initial () {
     if(consult.error) {
       setMessageError(JSON.stringify(consult.message, null, 2))
     }
+    setLoading(false)
   }
 
   const handleFetchChapters = (id:string, type:string, img:string, name:string)  => {
@@ -87,6 +92,7 @@ export function Initial () {
             Paged
           </Button> */}
         </div>
+        <Loading state={loading}/>
         <div className="grid grid-cols-4 gap-2">
           {dataManga && dataManga.length > 0 ? (
             dataManga.map((result:any, index:number) => (

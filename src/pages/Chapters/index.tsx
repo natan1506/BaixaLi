@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 import { DialogChapters } from "./components/DialogChapter";
+import { Loading } from "@/components/Loading";
  
 interface dataProps {
   chapters?: [],
@@ -15,6 +16,8 @@ export function Chapters() {
   const {id, type} = useParams()
   const [data, setData] = useState<dataProps | undefined>({});
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true)
+  const [noResults, setNoResults] = useState<boolean>(false);
   const [chapterSelected, setChapterSelected] = useState<string>("");
 
   useEffect(() => {
@@ -22,8 +25,12 @@ export function Chapters() {
       if(id) {
         if(type === "manga") {
           const chapters = await fetchChapters(id)
-          console.log(chapters)
           setData(chapters)
+
+          if(data?.chapters && data.chapters.length > 0 ) {
+            setNoResults(true)
+          }
+          setLoading(false)
         }
       }
     }
@@ -60,6 +67,7 @@ export function Chapters() {
           </div>
         </div>
         <div className="container justify-between gap-2">
+        <Loading state={loading}/>
         {data?.chapters && data.chapters.length > 0 ? (
           data.chapters.map((result:any, index:number) => (
             <button 
@@ -77,8 +85,12 @@ export function Chapters() {
             </button>
           ))
         ) : (
-          <p>No results found</p>
+         ""
         )}
+
+          {noResults && (
+            <p>No results</p>
+          )}
         </div>
       </div>
     </div>
