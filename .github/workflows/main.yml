@@ -43,6 +43,7 @@ jobs:
       - name: install pnpm
         run: |
           npm install -g pnpm
+          echo "::add-path::$(npm bin -g)"
           pnpm --version
 
       - name: install Rust stable
