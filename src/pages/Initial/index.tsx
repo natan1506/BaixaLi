@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { searchManga } from "@/api/Http";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Loader2Icon } from "lucide-react";
 import { Loading } from "@/components/Loading";
 
 export function Initial () {
