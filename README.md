@@ -1,7 +1,9 @@
-# Tauri + React + Typescript
+# BaixaLi
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+This is a App developing for download and read Manga for Linux, MacOs and Windows.
 
-## Recommended IDE Setup
+## Images
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+![Preview](images/readme1.png)
+![Preview](images/readme2.png)
+![Preview](images/readme3.png)
