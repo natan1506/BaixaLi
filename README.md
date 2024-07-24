@@ -4,6 +4,6 @@ This is a App developing for download and read Manga for Linux, MacOs and Window
 
 ## Images
 
-![Preview](images/readme1.png)
-![Preview](images/readme2.png)
-![Preview](images/readme3.png)
+![Preview](public/images/readme1.png)
+![Preview](public/images/readme2.png)
+![Preview](public/images/readme3.png)
